@@ -1,0 +1,10 @@
+<%= form_for Player.new do |f| %>
+  <%= f.label 'Enter New player name' %>
+  <%= f.text_field :name %>
+  <br>
+  <h3>Upload your avatar:</h3>
+  <br>
+  <%= f.label(:sprite, 'Select your avatar') %>
+  <%= f.file_field :sprite %>
+  <%= f.submit  %>
+  <% end %>
