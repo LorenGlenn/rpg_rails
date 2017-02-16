@@ -10,17 +10,25 @@ var block_w = 50;
 var p = 0;
 var setup_x=[];
 var setup_y=[];
+var enemies_x=[];
+var enemies_y=[];
+var potion_x=[];
+var potion_y=[];
+var potion = new Image();
+potion.src = 'http://i.imgur.com/FeNHEVB.png';
 var img = new Image();
 img.src = 'http://i.imgur.com/ZIZ1wdA.jpg';
+var enemies = new Image();
+enemies.src = 'http://i.imgur.com/yznzu6I.png';
 var player_image = new Image();
 
 
-function randomize() {
+function randomize(a,b) {
   for (var i = 0; i < 200; i++) {
-    var x = Math.floor((Math.random()* 24)+1)*50;
-    var y = Math.floor((Math.random()* 16)+1)*50;
-    setup_x.push(x);
-    setup_y.push(y);
+    var x = Math.floor((Math.random()* 24))*50;
+    var y = Math.floor((Math.random()* 16))*50;
+    a.push(x);
+    b.push(y);
   }
 }
 
@@ -34,8 +42,8 @@ function init() {
   block_x = 0;
   block_y = 0;
   drawBoard()
-  randomize()
-
+  randomize(setup_x,setup_y)
+  randomize(enemies_x, enemies_y)
   setInterval('draw()', 100);
 }
 function clearCanvas() {
@@ -64,9 +72,21 @@ function draw() {
   context.fillStyle = 'black'
 
   clearCanvas();
-  randomize()
-  for (var i = 0; i < 200; i++) {
+  randomize(setup_x,setup_y)
+  randomize(enemies_x, enemies_y)
+  randomize(potion_x, potion_y)
+
+  for (var i = 0; i < 150; i++) {
     context.drawImage(img,setup_x[i],setup_y[i],50,50)
+
+  }
+  for (var i = 0; i < 50; i++) {
+    context.drawImage(enemies,enemies_x[i],enemies_y[i],50,50)
+
+  }
+  for (var i = 0; i < 10; i++) {
+    context.drawImage(potion,potion_x[i],potion_y[i],50,50)
+
   }
   drawBoard();
   if (rightKey) block_x += 50;
@@ -94,7 +114,6 @@ function draw() {
 }
 
 function onKeyDown(evt) {
-  console.log(block_x, block_y)
   if (evt.keyCode == 39) rightKey = true;
   else if (evt.keyCode == 37) leftKey = true;
   if (evt.keyCode == 38) upKey = true;
